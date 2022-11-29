@@ -5,3 +5,9 @@ body {
   width: 1200px;
   height: 1000px;
 }
+
+element.style {
+  max-width: 556px;
+  max-height: 526px;
+  width: 133px;
+}

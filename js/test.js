@@ -12,73 +12,104 @@
   //行き方を表示 車か歩きか
   //自分のいる場所から何km以内で探すを出来るようにする
   //総武線沿い
+  //進捗何パーセントか示す
+  //選んだリストお店をクリックすると地図上に反映される
+
+function buttonClick(){
+  alert('おされました！');
+}
 
 
-//-----山崎先生の参考資料----//
-let infoboxs  = []; //Put infobox in an array
-let locations = []; //Put location in an array
-let map;
-    //Maps Init
+// document.getElementById('exec').addEventListener('click', () => {
+//   if (document.getElementById('address').value) {
+//   getLatLng(document.getElementById('address').value, (latlng) => {
+//   // map.setCenter(latlng)
+//   console.log(latlng.lat, latlng.lng);
+//   document.getElementById('lat').value = latlng.lat;
+//   document.getElementById('lng').value = latlng.lng;
+//   })
+//   }
+  // })
+
+
+
+    //画像入れる
+
     function GetMap() {
-        map = new Microsoft.Maps.Map('#myMap', {
-            center: new Microsoft.Maps.Location(35.66953224173969, 139.7029968976961),
-            zoom: 20
+      //------------------------------------------------------------------------
+      //1. Instance
+      //------------------------------------------------------------------------
+      const map = new Bmap("#myMap");
+      //------------------------------------------------------------------------
+      //2. Display Map
+      //------------------------------------------------------------------------
+      map.startMap(35.66947987482731, 139.70296469890292, "load", 12);
+
+      //----------------------------------------------------
+      //3. Infobox
+      //   options = new Array();
+      //   options[index] = { lat, lon, width, height, title, pinColor, description, show };
+      //----------------------------------------------------
+      const options = [];
+      options[0]={
+          "lat":35.66130953780814,
+          "lon": 139.74309446998464,
+          "title":"FlowerShop",
+          "pinColor":"#ff0000",
+          "height":300,
+          "width":320,
+          "description": '東京ガーデン<input type="button" value="button" id="btn"><br><img src="../img/flower.jpg" width="300">',
+          "show":false,
+      };
+      options[1]={
+          "lat":35.64802382112685, 
+          "lon":139.71768858873585,
+          "title":"FlowerShop",
+          "pinColor":"#ff0000",
+          "height":300,
+          "width":320,
+          "description": '恵比寿の花屋<input type="button" value="button" id="btn"><br><img src="../img/ebisu.jpg" width="300">',
+          "show":false
+      };
+      options[2]={
+          "lat":35.68346505234354, 
+          "lon":139.6863400140517,
+          "title":"FlowerShop",
+          "pinColor":"#ff0000",
+          "height":300,
+          "width":320,
+          "description": 'クラウディア東京オペラシティ店<input type="button" value="button" id="btn"><br><img src="../img/operacity.jpg" width="300">',
+          "show":false
+      };
+
+      //----------------------------------------------------
+      //4. Switch infoboxs
+      //   infoboxLayers(options, true); //true=one, false=Multiple
+      //----------------------------------------------------
+      map.infoboxLayers(options,true);
+
+      $("#decide").on("click",function(){
+        alert("OK");
+      })
+
+      $("#koko").on("click",function(){  
+        getLatLng(["東京都千代田区霞が関1-3-1"], (result) => {
+          console.log("緯度: ", result.lat);
+          console.log("経度: ", result.lng);
         });
+      
+      })
 
-        //Set:Infobox
-        locations[0] = map.getCenter();
-        const infobox0 = new Microsoft.Maps.Infobox(locations[0], {
-            title: 'ジーズアカデミー',
-            description: 'description'
-        });
-        infoboxs.push(infobox0);
-                
-        //フラワーケント
-        //Set:Infobox
-        locations[1] = new Microsoft.Maps.Location(35.697465537491446, 139.79998054297448);
-        const infobox1 = new Microsoft.Maps.Infobox(locations[1], {
-            title: 'フラワーケント',            
-            hight:'300',
-            with:'320',
-            description: '現在地<br><img src="../img/flower/jpg" width="300">',
-            show:false
-        });
-        infoboxs.push(infobox1);
+      // let button = document.getElementById('btn');
 
+      // button.addEventListener('click', function(){
+      // console.log('Click');
+      // });
 
-        //プラスフラワー
-        //Set:Infobox
-        locations[2] = new Microsoft.Maps.Location(35.70166778080805, 139.80379990266715);
-        const infobox2 = new Microsoft.Maps.Infobox(locations[2], {
-            title: 'プラスフラワー',
-            description: 'decription'
-        });
-        infoboxs.push(infobox2);
-        
-        //マーガレットハウス
-        //Set:Infobox
-        locations[3] = new Microsoft.Maps.Location(35.69054430169188, 139.78630662326452);
-        const infobox3 = new Microsoft.Maps.Infobox(locations[3], {
-            title: 'マーガレットハウス',
-            description: 'decription'
-        });
-        infoboxs.push(infobox3);
-        
-        
-        //Add:Place an infobox on the map.
-        for(var i=0;i<infoboxs.length;i++){
-            infoboxs[i].setMap(map); //Add infobox to Map
-        }
-
-        //Change the display of the map.
-        map.setView({
-            bounds: Microsoft.Maps.LocationRect.fromLocations(locations), //fromLocations or fromShapes
-            padding: 100
-        });
+  }
 
 
 
-    }
 
     // //****************************************
     // //成功関数

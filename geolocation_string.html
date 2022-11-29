@@ -6,18 +6,9 @@
   <title>Map&amp;Geolocation</title>
   <!-- <style>html,body{height:100%;}body{padding:0;margin:0;background:#333;}h1{padding:0;margin:0;font-size:50%;color:white;}</style> -->
 
-  <style>
-    /* body {
-      margin: 0;
-      padding: 0;
-      width: 1000px;
-      height: 1000px;
-    } */
-  </style>
 
-
-<script src="js/BmapQuery.js"></script>
 <script src="js/test.js"></script>
+<script src="js/BmapQuery.js"></script>
 
 <link rel="stylesheet" href="css/style.css">
 
@@ -28,9 +19,23 @@
   
   <h1>好きなお店を選んで自分だけのリスト</h1>
 
-  <!-- <div>
-  <button class="test">test</button> 
-  </div> -->
+  <div>
+    <!-- <button id="test">test</button>  -->
+    <input type="button" value="button" onclick="buttonClick()"> 
+  </div>
+
+  <div id="decide">確定</div>
+  <button id="koko">ここ</button>
+
+
+  <div id="form">
+    <h2>緯度･経度を求める住所を入力</h2>
+    <input type="text" id="address" value="東京都千代田区霞が関1-3-1" />
+    <button id="exec">検索</button>
+    <p><label><span>緯度:</span> <input type="text" id="lat"></label><br />
+    <label><span>経度:</span> <input type="text" id="lng"> </label></p>
+  </div>
+
     
 
   <!-- MapArea -->
@@ -40,7 +45,9 @@
 
   <div>My List</div>
   <ul>
-    <li>お花</li>
+    <li>
+      お花
+    </li>
     <li>装飾雑貨</li>
     <li>写真館</li>
     <li>ドレス</li>
@@ -52,12 +59,17 @@
 
 
   <!-- jQuery&GoogleMapsAPI -->
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
 <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AokHgh1grGCr3EDpuzGtpVGzME_umX7tE4TZqtjwd2yX4kyeVdRR71-FMiWzmJJg' async
 defer></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
 
 
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- JQuery -->
+<script src="https://cdn.geolonia.com/community-geocoder.js"></script>
 
 </body>
 
