@@ -7,69 +7,177 @@
   <!-- <style>html,body{height:100%;}body{padding:0;margin:0;background:#333;}h1{padding:0;margin:0;font-size:50%;color:white;}</style> -->
 
 
+<!-- <script type="module" src="js/test.js"></script> -->
 <script src="js/test.js"></script>
 <script src="js/BmapQuery.js"></script>
 
-<link rel="stylesheet" href="css/style.css">
+  <!--resetとcssの順番は重要 -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 
 </head>
 
 
-<body>
+<body id="body">
   
-  <h1>好きなお店を選んで自分だけのリスト</h1>
+  <!-- <h1>好きなお店を選んで自分だけのリスト</h1> -->
+  <!-- <h1 class="first_text">現在地の感想を入れて登録しよう！</h1> -->
+  <h1 class="first_text">Let's Register Your Location & Memo</h1>
+  <p class="te">まずはピンをクリックして現在地情報を取得！</p>
 
-  <div>
-    <!-- <button id="test">test</button>  -->
-    <input type="button" value="button" onclick="buttonClick()"> 
-  </div>
+  <!-- <div id="controll"> -->
+    <!-- <div id="pushpinClick" class="mouse">click</div>
+    <div id="pushpinMousedown" class="mouse">mousedown</div>
+    <div id="pushpinMouseout" class="mouse">mouseout</div>
+    <div id="pushpinMouseover" class="mouse">mouseover</div>
+    <div id="pushpinMouseup" class="mouse">mouseup</div>
+  </div> -->
 
-  <div id="decide">確定</div>
-  <button id="koko">ここ</button>
+
+  <!-- <div>My List</div>
+  <ul id="controll">
+    <li id="pushpinClick">お花</li>
+    <li id="pushpinMousedown">装飾雑貨</li>
+    <li id="pushpinMouseout">写真館</li>
+    <li id="pushpinMouseover">ドレス</li>
+    <li id="pushpinMouseup">音響</li>
+  </ul> -->
 
 
-  <div id="form">
-    <h2>緯度･経度を求める住所を入力</h2>
-    <input type="text" id="address" value="東京都千代田区霞が関1-3-1" />
-    <button id="exec">検索</button>
-    <p><label><span>緯度:</span> <input type="text" id="lat"></label><br />
-    <label><span>経度:</span> <input type="text" id="lng"> </label></p>
-  </div>
+      <!-- MapArea -->
+      <div id="view"></div>
+      <div id="myMap" style='position:relative;width:70%;height:70%;'></div>
+      <!-- /MapArea -->
 
-    
+    <p class="text_f">登録する現在地</p>
 
-  <!-- MapArea -->
-  <div id="view"></div>
-  <div id="myMap" style='position:relative;width:100%;height:98%;'></div>
-  <!-- /MapArea -->
 
-  <div>My List</div>
-  <ul>
-    <li>
-      お花
-    </li>
-    <li>装飾雑貨</li>
-    <li>写真館</li>
-    <li>ドレス</li>
-    <li>音響</li>
-  </ul>
+    <!-- クリックした場所の情報を登録する -->
+    <div id= "input-field" class="field">          
+      <input type= "text" placeholder="感想を入力してね" id= "text" class="textarea">
+      <input type= "button" value= "Send" id= "send" class="send">        
+      <!-- <button id="send">Go!</button> -->
+    </div>
+
+    <div id="list"></div>
+    <button id="delete_push" class="delete">リストを削除</button> 
+
+
+
+<!-- 以下jsの領域  -->
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+<!-- JQuery -->
+
+<script type="module">
+// //--------------------- 以下Firebase--------------------- //
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"; //ver.合わせる！
+import { getDatabase, ref, push, set, onChildAdded, remove,onChildRemoved, serverTimestamp}               //ver.合わせる！
+from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCT-kMe9r_4TmQyffyWVPy8Y3kcKlHcdwU",
+  authDomain: "mapapi-74836.firebaseapp.com",
+  projectId: "mapapi-74836",
+  storageBucket: "mapapi-74836.appspot.com",
+  messagingSenderId: "609299631314",
+  appId: "1:609299631314:web:e0ececeb74cba92d59310b"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const dbRef = ref(db,"mapapi")
+
+
+//お店の特色を記載する
+
+
+
+
+ // 送信処理を記載
+  $("#send").on('click', function(){
+        // id="text"の場所を取得します
+        const text = $('#text').val(); //.val()[0]
+        // console.log(text,'textの確認');
+        const lat = localStorage.getItem("nowLatitude");
+        console.log(lat,"緯度の確認")
+        const lon = localStorage.getItem("nowLongitude");
+        console.log(lon,"経度の確認");
+
+        const msg = {
+            text:text, //右はtextという箱ををセットしている（上で定義した）
+            lat:lat, 
+            lon:lon, 
+        }
+
+        //firebaseに送る準備をしている
+        const newPostRef = push(dbRef) //データを送信できる準備
+        set(newPostRef, msg); //firebaseの登録できる場所に保存するイメージ
+
+        $("#text").val("");
+
+        
+       //send送信イベント この下消さない
+    });
+
+    // 受信処理を記載（送信の中には書かない！）
+    onChildAdded(dbRef, function(data){
+        //ここからが受信処理
+
+        //登録されたデータを取得
+        const msg = data.val(); //上で関数の中に入れたdataのこと
+        // console.log(msg, '取得したデータの塊');
+        const key = data.key;
+        // console.log(key, 'データの塊にアクセス');
+
+        // es6のテンプレートリテラル
+        //htmlの略のh
+        let str = `  
+            <div class="out_list" >
+                <p class="text_n">緯度は${msg.lat}、経度は${msg.lon}です。</p>               
+                <p class="text_n">めも：${msg.text} </p>  
+                <p data-a=${key} id="delete"></p>                 
+            </div>        
+        ` ;
+
+        $("#list").append(str);
+
+    })
+
+    //削除機能
+    $("#delete_push").on('click',function(){
+      let del = $("#delete").data("a");
+      console.log(del,'カギ');
+      remove(ref(db, "mapapi/" + del));
+      location.reload();
+    })
+
+
+</script>
 
 
 
 
 
   <!-- jQuery&GoogleMapsAPI -->
-
+  <!-- 自分のkeyを入れる -->
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AokHgh1grGCr3EDpuzGtpVGzME_umX7tE4TZqtjwd2yX4kyeVdRR71-FMiWzmJJg' async
 defer></script>
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
 
-
-<!-- JQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!-- JQuery -->
-<script src="https://cdn.geolonia.com/community-geocoder.js"></script>
+<!-- <script src="https://cdn.geolonia.com/community-geocoder.js"></script> -->
 
 </body>
 

@@ -1,13 +1,110 @@
 
+.vsc-initialized{
+  text-align: center;
+}
+
+
+
 body {
+  background-color: #F5E653;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   width: 1200px;
   height: 1000px;
 }
 
-element.style {
-  max-width: 556px;
+.first_text{
+  font-size: 3rem;
+  padding: 2%;
+  font-family: 'Fasthand', cursive;
+}
+
+.te{
+  padding: 1%;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.text_f{
+  padding: 2%;
+  font-weight: bold;
+  font-size: 1.7rem;
+}
+
+.text_n{
+  padding: 1%;
+}
+
+/* element.style {
+  max-width: 556x;
   max-height: 526px;
   width: 133px;
+} */
+
+#myMap{
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+
+.field{
+  padding: 1%;
+  font-size: 2rem;
+}
+
+.send{
+  padding: 1%;
+}
+
+.delete{
+  padding: 1%;
+}
+
+.out_list{
+  padding: 2%;
+
+}
+
+/* textエリア */
+.textarea {
+  width         : 1000px;                /* 一旦100%幅     */
+  max-width     : 500px;               /* 入力域の最大幅 */
+  height        : 47px;                /* 入力域の高さ   */
+  background    : #ffffff;             /* 入力域の背景色 */
+  border        : 2px solid #87a689;   /* 入力域の枠線   */
+  border-radius : 4px;                 /* 入力域の角丸   */
+  padding       : 0 20px;              /* 入力文字の余白 */
+  font-size     : 1.2rem;                /*入力文字サイズ*/
+  color         : #323d33;             /* 入力文字の色   */
+  font-weight   : bold;                /* 入力文字の太字 */
+  letter-spacing: .1em;                /* 入力文字の間隔 */
+  transition    : .2s;       /* ←ここに変化の時間を指定 */
+}
+/* --- 入力フィールドにフォーカスか来たら ---------------*/
+.textarea :focus {
+  max-width     : 1000px;     /* ←ここに伸ばした後の幅を指定 */
+  border-radius : 23px;      /* ←ここに丸めた後の丸めを指定 */
+  border-color  : #db4949;             /* 枠線色         */
+  background    : #ffffcc;             /* 背景色         */
+  outline       : 0;
+}
+/* --- 入力説明の文字(標準) -----------------------------*/
+.textarea :placeholder-shown {
+  color         : #808080;             /* 文字色     */
+  font-size     : 14px;                /* 少し小さく     */
+ }
+/* --- 入力説明の文字(Chrome,Safari,Android,iOS等) ---- -*/
+.textarea ::-webkit-input-placeholder {
+  color         : #808080;             /* 文字色     */
+  font-size     : 14px;                /* 少し小さく     */
+}
+/* --- 入力説明の文字(IE用) -----------------------------*/
+.textarea :-ms-input-placeholder {
+  color         : #808080;             /* 文字色         */
+  font-size     : 14px;                /* 少し小さく     */
+}
+/* --- IEの入力エリア右側×消し -------------------------*/
+.textarea ::-ms-clear {
+    display     : none;                /* ×を消す       */
 }
